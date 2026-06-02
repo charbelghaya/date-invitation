@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Invitation ❤️</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="setup-container">
+
+    <div class="card">
+
+        <h1>Create Your Date Invitation ❤️</h1>
+
+        <input id="yourName" type="text" placeholder="Your Name">
+        <input id="partnerName" type="text" placeholder="Partner Name">
+        <input id="restaurant" type="text" placeholder="Restaurant">
+        <input id="date" type="date">
+        <input id="time" type="time">
+        <textarea id="message" placeholder="Message"></textarea>
+
+        <input id="photo" type="text" placeholder="Photo URL (optional)">
+        <input id="maps" type="text" placeholder="Maps link (optional)">
+
+        <button onclick="generateLink()">Generate Link 💕</button>
+
+        <div id="linkSection" class="hidden">
+            <input id="generatedLink" readonly>
+            <button onclick="copyLink()">Copy Link 📋</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
