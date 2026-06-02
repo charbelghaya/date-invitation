@@ -1,19 +1,18 @@
-
-// ===== SETUP PAGE =====
+// ===============================
+// CREATE INVITATION PAGE
+// ===============================
 
 function generateLink() {
+    const yourName = document.getElementById("yourName")?.value || "";
+    const partnerName = document.getElementById("partnerName")?.value || "";
+    const restaurant = document.getElementById("restaurant")?.value || "";
+    const date = document.getElementById("date")?.value || "";
+    const time = document.getElementById("time")?.value || "";
+    const message = document.getElementById("message")?.value || "";
+    const photo = document.getElementById("photo")?.value || "";
+    const maps = document.getElementById("maps")?.value || "";
 
-    const yourName = encodeURIComponent(document.getElementById("yourName")?.value || "");
-    const partnerName = encodeURIComponent(document.getElementById("partnerName")?.value || "");
-    const restaurant = encodeURIComponent(document.getElementById("restaurant")?.value || "");
-    const date = encodeURIComponent(document.getElementById("date")?.value || "");
-    const time = encodeURIComponent(document.getElementById("time")?.value || "");
-    const message = encodeURIComponent(document.getElementById("message")?.value || "");
-    const photo = encodeURIComponent(document.getElementById("photo")?.value || "");
-    const maps = encodeURIComponent(document.getElementById("maps")?.value || "");
-
-    // Works whether opened locally or from a web server
-    const inviteUrl = new URL("invite.html", window.location.href);
+    const inviteUrl = new URL("./invite.html", window.location.href);
 
     inviteUrl.searchParams.set("yourName", yourName);
     inviteUrl.searchParams.set("partnerName", partnerName);
@@ -25,81 +24,151 @@ function generateLink() {
     inviteUrl.searchParams.set("maps", maps);
 
     document.getElementById("generatedLink").value = inviteUrl.toString();
-    document.getElementById("linkSection").classList.remove("hidden");
+
+    const linkSection = document.getElementById("linkSection");
+    if (linkSection) {
+        linkSection.classList.remove("hidden");
+    }
 }
 
 function copyLink() {
-    const field = document.getElementById("generatedLink");
-    if (!field) return;
+    const linkField = document.getElementById("generatedLink");
 
-    field.select();
-    field.setSelectionRange(0, 99999);
+    if (!linkField || !linkField.value) {
+        alert("Generate a link first.");
+        return;
+    }
 
-    navigator.clipboard.writeText(field.value)
-        .then(() => alert("Link copied!"))
-        .catch(() => alert("Copy failed. Copy manually."));
+    navigator.clipboard.writeText(linkField.value)
+        .then(() => {
+            alert("Link copied successfully!");
+        })
+        .catch(() => {
+            alert("Failed to copy link.");
+        });
 }
 
-// ===== INVITE PAGE =====
+
+// ===============================
+// INVITATION PAGE
+// ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    if (!document.getElementById("partnerText")) return;
+    const partnerText = document.getElementById("partnerText");
+
+    // Not on invite page
+    if (!partnerText) return;
 
     const params = new URLSearchParams(window.location.search);
 
-    const partner = decodeURIComponent(params.get("partnerName") || "");
-    const restaurant = decodeURIComponent(params.get("restaurant") || "");
-    const date = decodeURIComponent(params.get("date") || "");
-    const time = decodeURIComponent(params.get("time") || "");
-    const message = decodeURIComponent(params.get("message") || "");
-    const photo = decodeURIComponent(params.get("photo") || "");
-    const maps = decodeURIComponent(params.get("maps") || "");
+    const yourName = params.get("yourName") || "";
+    const partnerName = params.get("partnerName") || "";
+    const restaurant = params.get("restaurant") || "";
+    const date = params.get("date") || "";
+    const time = params.get("time") || "";
+    const message = params.get("message") || "";
+    const photo = params.get("photo") || "";
+    const maps = params.get("maps") || "";
 
-    document.getElementById("partnerText").innerText =
-        partner ? `${partner}, I have something special ❤️` : "I have something special ❤️";
+    partnerText.innerText =
+        partnerName
+            ? `${partnerName}, I have something special ❤️`
+            : "I have something special ❤️";
 
-    if (photo) {
-        const img = document.getElementById("photoDisplay");
-        img.src = photo;
-        img.classList.remove("hidden");
+    const photoDisplay = document.getElementById("photoDisplay");
+
+    if (photoDisplay && photo) {
+        photoDisplay.src = photo;
+        photoDisplay.style.display = "block";
     }
 
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
 
-    let count = 0;
-    const msgs = ["Are you sure? 🥺", "Really? 😭", "Think again ❤️", "Please 💕", "Last chance 😘"];
+    let attempts = 0;
 
-    noBtn.onclick = () => {
-        if (count < msgs.length) {
-            noBtn.innerText = msgs[count];
-            yesBtn.style.transform = `scale(${1 + count * 0.15})`;
+    const noMessages = [
+        "Are you sure? 🥺",
+        "Really? 😢",
+        "Think again ❤️",
+        "Please 💕",
+        "Last chance 😘"
+    ];
 
-            noBtn.style.left = Math.random() * 220 + "px";
-            noBtn.style.top = Math.random() * 140 + "px";
+    if (noBtn && yesBtn) {
+        noBtn.addEventListener("click", () => {
 
-            count++;
-        } else {
-            noBtn.style.display = "none";
-        }
-    };
+            if (attempts < noMessages.length) {
 
-    yesBtn.onclick = () => {
-        document.getElementById("questionPage").classList.add("hidden");
-        document.getElementById("successPage").classList.remove("hidden");
+                noBtn.innerText = noMessages[attempts];
 
-        document.getElementById("restaurantDisplay").innerText = restaurant ? "🍽 " + restaurant : "";
-        document.getElementById("dateDisplay").innerText = date ? "📅 " + date : "";
-        document.getElementById("timeDisplay").innerText = time ? "🕒 " + time : "";
-        document.getElementById("messageDisplay").innerText = message;
+                yesBtn.style.transform =
+                    `scale(${1 + attempts * 0.15})`;
 
-        const mapsBtn = document.getElementById("mapsBtn");
+                noBtn.style.position = "relative";
+                noBtn.style.left =
+                    Math.floor(Math.random() * 200) + "px";
 
-        if (maps) {
-            mapsBtn.href = maps;
-        } else {
-            mapsBtn.style.display = "none";
-        }
-    };
+                noBtn.style.top =
+                    Math.floor(Math.random() * 100) + "px";
+
+                attempts++;
+            } else {
+                noBtn.style.display = "none";
+            }
+        });
+    }
+
+    if (yesBtn) {
+        yesBtn.addEventListener("click", () => {
+
+            document
+                .getElementById("questionPage")
+                ?.classList.add("hidden");
+
+            document
+                .getElementById("successPage")
+                ?.classList.remove("hidden");
+
+            const restaurantDisplay =
+                document.getElementById("restaurantDisplay");
+
+            const dateDisplay =
+                document.getElementById("dateDisplay");
+
+            const timeDisplay =
+                document.getElementById("timeDisplay");
+
+            const messageDisplay =
+                document.getElementById("messageDisplay");
+
+            if (restaurantDisplay)
+                restaurantDisplay.innerText =
+                    restaurant ? `🍽 ${restaurant}` : "";
+
+            if (dateDisplay)
+                dateDisplay.innerText =
+                    date ? `📅 ${date}` : "";
+
+            if (timeDisplay)
+                timeDisplay.innerText =
+                    time ? `🕒 ${time}` : "";
+
+            if (messageDisplay)
+                messageDisplay.innerText = message;
+
+            const mapsBtn =
+                document.getElementById("mapsBtn");
+
+            if (mapsBtn) {
+                if (maps) {
+                    mapsBtn.href = maps;
+                    mapsBtn.target = "_blank";
+                } else {
+                    mapsBtn.style.display = "none";
+                }
+            }
+        });
+    }
 });
