@@ -1,81 +1,204 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial;
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-background:#fff5f8;
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-overflow:hidden;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff0f5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-.card{
-background:white;
-padding:30px;
-border-radius:20px;
-width:90%;
-max-width:500px;
-text-align:center;
-box-shadow:0 10px 30px rgba(255,105,180,0.2);
+.hidden {
+    display: none !important;
 }
 
-h1{
-color:#ff4d8d;
-margin-bottom:15px;
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
-input, textarea{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:2px solid #ffd1dc;
-border-radius:10px;
+/* =========================
+   TITLES
+========================= */
+
+h1 {
+    color: #ff4f8b;
+    margin-bottom: 25px;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
 }
 
-button{
-background:#ff4d8d;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:50px;
-cursor:pointer;
-margin-top:10px;
+h2 {
+    color: #ff4f8b;
+    margin-bottom: 20px;
+    font-size: clamp(1.4rem, 4vw, 2rem);
 }
 
-.hidden{display:none;}
-
-.button-area{
-position:relative;
-width:300px;
-height:200px;
-margin:auto;
+p {
+    line-height: 1.6;
 }
 
-#noBtn{
-position:absolute;
-top:0;
-left:180px;
+/* =========================
+   INPUTS
+========================= */
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 2px solid #ffd1df;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
 }
 
-.photo{
-width:200px;
-height:200px;
-object-fit:cover;
-border-radius:15px;
-margin-bottom:10px;
+textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
-#mapsBtn{
-display:inline-block;
-margin-top:15px;
-padding:10px 20px;
-background:#ff4d8d;
-color:white;
-border-radius:30px;
-text-decoration:none;
+input:focus,
+textarea:focus {
+    border-color: #ff4f8b;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button,
+.btn {
+    display: inline-block;
+    background: #ff4f8b;
+    color: white;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    text-decoration: none;
+    margin: 5px;
+}
+
+button:hover,
+.btn:hover {
+    transform: scale(1.05);
+}
+
+#yesBtn {
+    min-width: 120px;
+}
+
+#noBtn {
+    min-width: 120px;
+}
+
+/* =========================
+   GENERATED LINK
+========================= */
+
+#generatedLink {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   IMAGE
+========================= */
+
+#photoDisplay {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 20px;
+    margin: 20px auto;
+    display: block;
+}
+
+/* =========================
+   SUCCESS PAGE
+========================= */
+
+.success-card {
+    margin-top: 20px;
+}
+
+.success-card p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+/* =========================
+   MOBILE PHONES
+========================= */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    button,
+    .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    #yesBtn,
+    #noBtn {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media (max-width: 480px) {
+
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    input,
+    textarea {
+        font-size: 16px; /* prevents zoom on iPhone */
+    }
 }
